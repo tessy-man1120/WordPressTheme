@@ -16,7 +16,15 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Category</h1>
+            <?php if (is_category()) : ?>
+              <h1>Category</h1>
+            <?php elseif (is_author()) : ?>
+              <h1>Author</h1>
+            <?php elseif (is_date()) : ?>
+              <h1>Date</h1>
+            <?php else : ?>
+              <h1>Tag</h1>
+            <?php endif; ?>
             <span class="subheading"><?php wp_title(''); ?></span>
           </div>
         </div>
@@ -29,23 +37,23 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <?php if (have_posts()) : ?>
-          <?php while(have_posts()): the_post(); ?>
-          <div class="post-preview">
-            <a href="<?php the_permalink(); ?>">
-              <h2 class="post-title">
-                <?php the_title(); ?>
-              </h2>
-              <h3 class="post-subtitle">
-                <!-- 投稿の際には抜粋の入力を行う -->
-                <?php the_excerpt(); ?>
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <?php the_author()?>
+          <?php while (have_posts()) : the_post(); ?>
+            <div class="post-preview">
+              <a href="<?php the_permalink(); ?>">
+                <h2 class="post-title">
+                  <?php the_title(); ?>
+                </h2>
+                <h3 class="post-subtitle">
+                  <!-- 投稿の際には抜粋の入力を行う -->
+                  <?php the_excerpt(); ?>
+                </h3>
+              </a>
+              <p class="post-meta">Posted by
+                <?php the_author() ?>
                 <?php the_time(get_option('date_format')); ?>
-            </p>
-          </div>
-          <hr>
+              </p>
+            </div>
+            <hr>
           <?php endwhile; ?>
           <!-- Pager -->
           <div class="clearfix">
